@@ -24,3 +24,14 @@ exports.saveUserToDB = async (req) => {
         return{status: 501, message: error.message}
     }
 }
+
+exports.verifyUser = async (id) => {
+    try {
+        await User.findOneAndUpdate({val_id: id}, {$set: {active: true}})  
+        const {name} = await User.findOne({val_id: id})
+        return {status:200, message: `${name} is now activated`}
+    } catch (error) {
+        return {status:404, message: `user not found`}
+    }
+    
+}
