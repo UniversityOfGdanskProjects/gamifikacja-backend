@@ -1,7 +1,7 @@
 'use strict';
 const {User} = require('../Model/userModel')
 const { v4: uuidv4 } = require('uuid');
-
+const {signupMail} = require('../Utils/emailSender')
 exports.saveUserToDB = async (req) => {
     const {name,password,email} = req;
     const newUser = new User({
@@ -15,7 +15,8 @@ exports.saveUserToDB = async (req) => {
 
     try {
         const user = await newUser.save()
-        console.log(user);
+        // console.log(user);
+        await signupMail(email, newUser.val_id)
         return {status: 200, message: `user ${name} saved to DB, check your email: ${email}`}
     }
     catch (error) {
