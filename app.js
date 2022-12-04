@@ -9,7 +9,6 @@ const {PORT} = require('./config/variables')
 //Controllers Imports
 const registerRouter = require('./Routes/register')
 
-
 // controller routes
 app.use('/register',registerRouter);
 async function start() {
