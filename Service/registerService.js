@@ -2,11 +2,14 @@
 const {User} = require('../Model/userModel')
 const { v4: uuidv4 } = require('uuid');
 const {signupMail} = require('../Utils/emailSender')
+const bcrypt = require('bcrypt')
+
 exports.saveUserToDB = async (req) => {
     const {name,password,email} = req;
+    const hashPasswd = await bcrypt.hash(password, 10 )
     const newUser = new User({
         name: name,
-        password: password,
+        password: hashPasswd,
         email: email,
         role: "USER",
         active: false,
